@@ -79,7 +79,7 @@
 
 ### exe 版
 
-1. [Releases](../../releases) 页下载 `Yueluo-IDOR-Pro-v3.0.exe`（约 13 MB，即"越权测试工具"）
+1. [Releases](../../releases) 页下载（即"越权测试工具"）：`Yueluo-IDOR-Pro-v3.0.exe`（64位，约 13 MB）/ `Yueluo-IDOR-Pro-v3.0-win32.exe`（32位，约 7 MB）
 2. 双击运行，自动弹出控制台页面
 
 ### 源码版
