@@ -2,7 +2,7 @@
 
 <img src="assets/yueluo_256.png" width="120" alt="月落" />
 
-# 月落 · 越权测试工具
+# 月落 · 越权测试工具 (Yueluo IDOR Pro)
 
 **多账号越权（IDOR / Broken Access Control）自动化检测平台**
 
@@ -46,7 +46,7 @@
 
 ### exe 版（推荐）
 
-1. 下载 `越权测试工具.exe`（约 13 MB）
+1. [Releases](../../releases) 页下载 `Yueluo-IDOR-Pro-v3.0.exe`（约 13 MB，即"越权测试工具"）
 2. 双击运行，自动弹出控制台页面
 3. 要求：Windows 系统 + Chrome 或 Edge 浏览器（Win10/11 自带 Edge 即可）
 
