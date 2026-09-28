@@ -84,12 +84,49 @@
 
 ### 源码版
 
+**1. 安装依赖**（仅 2 个运行依赖，Python ≥ 3.8，Windows/macOS/Linux 均可）：
+
 ```bash
 git clone https://github.com/2561769445/yueluo-idor-pro
 cd yueluo-idor-pro
 pip install websocket-client requests
+```
+
+| 依赖 | 用途 |
+|------|------|
+| `websocket-client` | CDP 流量录制（连接浏览器调试端口）|
+| `requests` | 越权重放引擎 |
+
+**2. 启动**：
+
+```bash
 python idor_pro.py
-# 浏览器打开 http://127.0.0.1:8777
+# 自动打开浏览器 http://127.0.0.1:8777（端口被占会自动 +1）
+```
+
+**3. 可选：本地靶场体验**（不依赖任何外部系统）：
+
+```bash
+python mock_lab.py        # 另开终端, 起内置靶场 http://127.0.0.1:9900
+# 账号 alice / bob / admin, 密码均为 123456
+# 工具里添加这3个账号 → 起始URL填 http://127.0.0.1:9900/ → 完整走一遍全流程
+```
+
+**4. 可选：跑测试**（开发/二次开发后验证）：
+
+```bash
+python e2e_test.py         # 端到端验收: 3账号全流程+判定矩阵断言
+python full_regression.py  # 全功能回归: 54项自动化检查
+```
+
+**5. 可选：自己打包 exe**：
+
+```bash
+pip install pyinstaller
+pyinstaller --onefile --noconsole --name 越权测试工具 ^
+  --icon=assets/yueluo.ico --add-data "assets;assets" ^
+  --hidden-import websocket --hidden-import requests idor_pro.py
+# 产物在 dist/ 目录
 ```
 
 ### 五分钟上手
