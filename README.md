@@ -53,7 +53,7 @@
 ### 源码版
 
 ```bash
-pip install websocket-client requests pillow
+pip install websocket-client requests
 python idor_pro.py
 # 浏览器打开 http://127.0.0.1:8777
 ```
