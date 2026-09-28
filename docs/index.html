@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>月落 · 越权测试工具</title>
+<style>
+:root{--bg:#0D1526;--p1:#9B7BF7;--p2:#6D4DE0;--p3:#A78BFA;--txt:#d7e0ea;--dim:#8194a7}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font:16px/1.8 "Microsoft YaHei",-apple-system,sans-serif;overflow-x:hidden}
+/* ===== 星空 ===== */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;background:#fff;border-radius:50%;animation:tw 3s infinite}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+/* ===== 首屏 ===== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;z-index:1;text-align:center;padding:20px}
+.moon-logo{width:130px;height:130px;border-radius:30px;background:linear-gradient(135deg,var(--p1),var(--p2));
+position:relative;animation:float 5s ease-in-out infinite;box-shadow:0 20px 60px #6D4DE066;overflow:hidden}
+.moon-logo .c1{position:absolute;width:66px;height:66px;background:#fff;border-radius:50%;top:22px;left:28px}
+.moon-logo .c2{position:absolute;width:74px;height:74px;background:linear-gradient(135deg,#9B7BF7,#7A57E8);border-radius:50%;top:14px;left:38px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.hero h1{font-size:52px;margin:28px 0 8px;font-weight:800}
+.hero h1 .yl{color:#fff}.hero h1 .sub{color:var(--p3);font-weight:500;font-size:30px}
+.hero p.tag{color:var(--dim);font-size:18px;margin-bottom:10px}
+.typing{color:var(--p3);font-size:15px;min-height:28px;font-family:Consolas,monospace}
+.caret{display:inline-block;width:8px;height:16px;background:var(--p3);vertical-align:-2px;animation:tw 1s infinite}
+.btns{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn{padding:13px 34px;border-radius:10px;font-size:16px;text-decoration:none;font-weight:600;transition:.25s}
+.btn.p{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;box-shadow:0 8px 24px #6D4DE055}
+.btn.p:hover{transform:translateY(-3px);box-shadow:0 14px 34px #6D4DE088}
+.btn.g{border:1px solid #283548;color:var(--dim)}
+.btn.g:hover{border-color:var(--p3);color:var(--p3)}
+/* ===== 数据条 ===== */
+.stats{display:flex;gap:44px;justify-content:center;margin-top:56px;flex-wrap:wrap}
+.stat b{font-size:40px;background:linear-gradient(90deg,var(--p1),#c9b3ff);-webkit-background-clip:text;background-clip:text;color:transparent;display:block}
+.stat span{color:var(--dim);font-size:13px}
+/* ===== 通用节 ===== */
+section{max-width:1080px;margin:0 auto;padding:90px 24px;position:relative;z-index:1}
+h2{font-size:32px;text-align:center;margin-bottom:14px}
+h2 em{font-style:normal;background:linear-gradient(90deg,var(--p1),#c9b3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{text-align:center;color:var(--dim);margin-bottom:52px}
+/* 流程 */
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;justify-content:center}
+.step{background:#141d2e;border:1px solid #283548;border-radius:14px;padding:22px 18px;width:150px;text-align:center;position:relative;opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.2,.8,.2,1)}
+.step.on{opacity:1;transform:none}
+.step .ico{font-size:34px;margin-bottom:8px}
+.step b{display:block;font-size:15px;margin-bottom:4px}
+.step small{color:var(--dim);font-size:12px;line-height:1.5;display:block}
+.arrow{align-self:center;color:var(--p3);font-size:22px;padding:0 8px;opacity:.6;animation:slide 1.6s infinite}
+@keyframes slide{50%{transform:translateX(6px)}}
+/* 六重引擎 */
+.engines{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.eng{background:#141d2e;border:1px solid #283548;border-radius:14px;padding:24px;opacity:0;transform:translateY(26px);transition:.7s}
+.eng.on{opacity:1;transform:none}
+.eng:hover{border-color:var(--p1);transform:translateY(-4px);transition:.25s}
+.eng .no{display:inline-block;width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;text-align:center;line-height:30px;font-weight:700;margin-bottom:10px}
+.eng b{font-size:17px}.eng p{color:var(--dim);font-size:13.5px;margin-top:6px}
+/* 判定 */
+.levels{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.lv{padding:16px 26px;border-radius:12px;font-size:15px;font-weight:600;opacity:0;transition:.6s;cursor:default}
+.lv.on{opacity:1}
+.lvh{background:#2d1620;color:#ff7b7b;border:1px solid #5c2733}
+.lvm{background:#2d2413;color:#ffc24b;border:1px solid #5c4a22}
+.lvo{background:#12281a;color:#4cd97b;border:1px solid #235c38}
+.lvp{background:#182338;color:#7a8ba0;border:1px solid #283548}
+/* GitHub */
+.gh-box{text-align:center;background:#141d2e;border:1px dashed #3a4a63;border-radius:16px;padding:46px 24px}
+.gh-box code{display:inline-block;margin-top:16px;padding:10px 22px;background:#0e1523;border-radius:8px;color:var(--p3);font-size:15px;font-family:Consolas,monospace;user-select:all}
+footer{text-align:center;color:#56657a;font-size:13px;padding:40px 0 60px;position:relative;z-index:1}
+footer .m{font-size:22px}
+.reveal{opacity:0;transform:translateY(34px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.reveal.on{opacity:1;transform:none}
+@media(max-width:760px){.hero h1{font-size:34px}.hero h1 .sub{font-size:20px}.stat b{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<div class="hero">
+  <div class="moon-logo"><div class="c1"></div><div class="c2"></div></div>
+  <h1><span class="yl">月落</span> <span class="sub">越权测试工具</span></h1>
+  <p class="tag">多账号越权（IDOR / Broken Access Control）自动化检测平台</p>
+  <div class="typing"><span id="ty"></span><i class="caret"></i></div>
+  <div class="btns">
+    <a class="btn p" href="https://github.com/2561769445/yueluo-idor-pro/releases" target="_blank">⬇ 下载 exe（13MB 免安装）</a>
+    <a class="btn g" href="https://github.com/2561769445/yueluo-idor-pro" target="_blank">⭐ GitHub 源码</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b data-n="6">0</b><span>重测试引擎</span></div>
+    <div class="stat"><b data-n="54">0</b><span>项自动化回归</span></div>
+    <div class="stat"><b data-n="10">0</b><span>倍录制池增量(自动遍历)</span></div>
+    <div class="stat"><b data-n="100" data-suf="%">0</b><span>本地判定正确率(靶场)</span></div>
+  </div>
+</div>
+
+<section>
+  <h2>只需<em>登录一次</em>，其余交给月落</h2>
+  <p class="lead">从"人肉点功能点 + 人肉对流量"到"人登录，工具扫全站"</p>
+  <div class="flow">
+    <div class="step"><div class="ico">👥</div><b>多账号</b><small>管理员+普通用户<br>水平垂直一起测</small></div>
+    <div class="arrow">➜</div>
+    <div class="step"><div class="ico">🧲</div><b>流量录制</b><small>CDP无侵入<br>Cookie/Token全捕获</small></div>
+    <div class="arrow">➜</div>
+    <div class="step"><div class="ico">🕸</div><b>自动遍历</b><small>路由+API变体枚举<br>扫出隐藏接口</small></div>
+    <div class="arrow">➜</div>
+    <div class="step"><div class="ico">⚔️</div><b>六重测试</b><small>换凭证/去凭证<br>换ID/深度验证</small></div>
+    <div class="arrow">➜</div>
+    <div class="step"><div class="ico">🤖</div><b>AI筛查</b><small>LLM逐条复核<br>误报自动标出</small></div>
+    <div class="arrow">➜</div>
+    <div class="step"><div class="ico">📊</div><b>报告导出</b><small>数据包左右对照<br>复现步骤齐全</small></div>
+  </div>
+</section>
+
+<section>
+  <h2><em>六重</em>测试引擎</h2>
+  <p class="lead">每一重都瞄准越权的一个独立成因</p>
+  <div class="engines">
+    <div class="eng"><span class="no">1</span><b>baseline 原样重放</b><p>录制有效性验证 + 防重放机制检测，排除干扰项</p></div>
+    <div class="eng"><span class="no">2</span><b>cross 换凭证重放</b><p>用 B 的凭证重放 A 的请求 —— 检测服务端是否校验凭证归属（水平/垂直越权）</p></div>
+    <div class="eng"><span class="no">3</span><b>noauth 去凭证重放</b><p>去掉全部 Cookie/Token 裸请求 —— 检测未授权访问</p></div>
+    <div class="eng"><span class="no">4</span><b>param_swap ID 交叉</b><p>A 的凭证 + B 的 ID 参数 = B 的数据？铁证级水平越权证据</p></div>
+    <div class="eng"><span class="no">5</span><b>深度验证 · 请求头变体</b><p>对"防护正常"的接口追加 XFF 伪造复核 —— 部分系统的防护一戳就穿</p></div>
+    <div class="eng"><span class="no">6</span><b>深度验证 · 方法翻转</b><p>GET↔POST 同 URL 复核 —— HTTP 方法级鉴权不一致检测</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>判定分级 · <em>五层降噪</em></h2>
+  <p class="lead">时间戳噪声 / 公共接口 / 按身份返回 / 公开数据 / 认证接口 自动排除，高危即高可信</p>
+  <div class="levels">
+    <div class="lv lvh">🔴 高危 · 附复现步骤与影响说明</div>
+    <div class="lv lvm">🟡 中危 · 需人工确认项</div>
+    <div class="lv lvo">🟢 正常 · 服务端正确拒绝</div>
+    <div class="lv lvp">⚪ 公共 · 自动降噪</div>
+  </div>
+</section>
+
+<section>
+  <h2>开源地址</h2>
+  <div class="gh-box reveal">
+    <div style="font-size:40px">🌙</div>
+    <p style="margin-top:10px">月落 · 让越权测试像月光一样<br>安静地覆盖每一个接口</p>
+    <code>github.com/2561769445/yueluo-idor-pro</code>
+    <p style="color:#56657a;font-size:13px;margin-top:18px">MIT License · 仅供授权安全测试</p>
+  </div>
+</section>
+
+<footer>
+  <div class="m">🌙</div>
+  <p>月落 Yueluo IDOR Pro v3.0 · 单文件 · 零依赖 · Windows + Chrome/Edge 即用</p>
+</footer>
+
+<script>
+// 星空
+const sk=document.getElementById('stars');
+for(let i=0;i<90;i++){const s=document.createElement('i');s.className='star';
+s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+sk.appendChild(s)}
+// 打字机
+const msgs=['多账号流量录制 → 交叉重放 → 自动分级 → AI 筛查 → 报告导出','配置账号 → 登录 → 自动遍历 → 一键测试','六重引擎 · 五层降噪 · AI复核 · Burp联动'];
+let mi=0,ci=0,del=false;
+(function type(){const m=msgs[mi];document.getElementById('ty').textContent=del?m.slice(0,--ci):m.slice(0,++ci);
+if(!del&&ci===m.length){del=true;setTimeout(type,2000);return}
+if(del&&ci===0){del=false;mi=(mi+1)%msgs.length}
+setTimeout(type,del?22:55)})()
+// 滚动显现 + 数字滚动
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+if(e.target.classList.contains('stat')){const b=e.target.querySelector('b');const n=+b.dataset.n,suf=b.dataset.suf||'';let t0=null;
+const tick=ts=>{t0??=ts;const p=Math.min((ts-t0)/1200,1);b.textContent=Math.round(n*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)}
+e.target.classList.add('on')}));
+document.querySelectorAll('.step,.eng,.lv,.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%8*70)+'ms';io.observe(el)});
+document.querySelectorAll('.stat').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
